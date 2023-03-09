@@ -1,12 +1,6 @@
 import { initializeApp } from "firebase/app";
-import {
-  getDoc,
-  collection,
-  getFirestore,
-  query,
-  where,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getFirestore, getDocs } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBMVZkBPybBM96fqeb5rlCOQceN1tBreuQ",
@@ -21,6 +15,7 @@ const firebaseConfig = {
 export function useFirebase() {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const auth = getAuth(app);
 
   const querySnapshot = async (table: string) => {
     const q = await getDocs(collection(db, table));
@@ -31,9 +26,22 @@ export function useFirebase() {
     return items;
   };
 
+  const login = async (email: string, password: string) => {
+    const l = await signInWithEmailAndPassword(auth, email, password);
+    return l;
+  };
+
+  const logout = () => {
+    signOut(auth);
+    window.location.href = "/login";
+  };
+
   return {
     app,
     db,
+    auth,
     getCollections: (table: string) => querySnapshot(table),
+    login,
+    logout,
   };
 }

@@ -1,6 +1,11 @@
-import { PolarisProvider } from "@/service/PolarisProvider";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import "@shopify/polaris/build/esm/styles.css";
+
+const PolarisProvider = dynamic(() => import("@/service/PolarisProvider"), {
+  ssr: false,
+  // loading: () => <p>Loading...</p>,
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <PolarisProvider>{children}</PolarisProvider>
+        <div>
+          <PolarisProvider>{children}</PolarisProvider>
+        </div>
       </body>
     </html>
   );

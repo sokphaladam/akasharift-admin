@@ -28,6 +28,8 @@ export function CharacterScreen() {
       <div className="grid grid-cols-2 gap-2">
         <div>
           <DropFileUpload />
+          <br />
+          {JSON.stringify(items)}
         </div>
       </div>
     </Page>
