@@ -1,9 +1,21 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Page } from "@shopify/polaris";
 import { DropFileUpload } from "@/components/DropFileUpload";
+import { useFirebase } from "@/service/useFirebase";
 
 export function CharacterScreen() {
+  const [items, setItems] = useState<any[]>([]);
+  const { getCollections } = useFirebase();
+
+  const readCollections = async () => {
+    setItems(await getCollections("character"));
+  };
+
+  useEffect(() => {
+    readCollections();
+  }, []);
+
   return (
     <Page
       title="Characters"
