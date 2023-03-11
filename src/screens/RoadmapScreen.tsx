@@ -14,9 +14,7 @@ export function RoadmapScreen() {
       }}
     >
       <div className="grid grid-cols-2 gap-2">
-        <div>
-          <DropFileUpload />
-        </div>
+        <div></div>
       </div>
     </Page>
   );

@@ -1,21 +1,61 @@
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore, getDocs } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  FirebaseStorage,
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  list,
+  listAll,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+import firebase_app from "@/firebase/config";
+import { firebase_store } from "@/firebase/firebase_store";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBMVZkBPybBM96fqeb5rlCOQceN1tBreuQ",
-  authDomain: "akasharift-860aa.firebaseapp.com",
-  projectId: "akasharift-860aa",
-  storageBucket: "akasharift-860aa.appspot.com",
-  messagingSenderId: "691171534430",
-  appId: "1:691171534430:web:2e304ca451b91374dc36cf",
-  measurementId: "G-Q5GF81C8J1",
-};
+class FireStorageFile {
+  refStr = "akasha_rift/";
+  storage = getStorage(firebase_app);
+
+  upload(file: File) {
+    const storageRef = ref(this.storage, this.refStr + file.name);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    return uploadTask;
+  }
+
+  delete(pathname: string) {
+    const storageRef = ref(this.storage, this.refStr + pathname);
+    return deleteObject(storageRef);
+  }
+
+  getStorageRef(pathname: string) {
+    return ref(this.storage, this.refStr + pathname);
+  }
+
+  async listF() {
+    const storageRef = ref(this.storage, this.refStr);
+
+    const { items } = await list(storageRef, { maxResults: 10 });
+
+    console.log(items);
+
+    return items.map((x) => {
+      return {
+        name: x.name,
+        fullpath: x.fullPath,
+      };
+    });
+  }
+}
+
+class FireDatabase {
+  database = getFirestore(firebase_app);
+}
 
 export function useFirebase() {
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
+  const db = getFirestore(firebase_app);
+  const auth = getAuth(firebase_app);
 
   const querySnapshot = async (table: string) => {
     const q = await getDocs(collection(db, table));
@@ -37,11 +77,12 @@ export function useFirebase() {
   };
 
   return {
-    app,
     db,
     auth,
     getCollections: (table: string) => querySnapshot(table),
     login,
     logout,
+    file: new FireStorageFile(),
+    data: firebase_store,
   };
 }

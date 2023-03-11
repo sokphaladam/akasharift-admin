@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import '@shopify/polaris/build/esm/styles.css';
 
 .Polaris-Button--primary {
   --pc-button-color: var(--p-interactive) !important;
@@ -10,4 +9,13 @@
   --pc-button-color-active: var(--p-interactive-pressed) !important;
   --pc-button-color-depressed: var(--p-interactive-pressed-on-dark) !important;
   background: var(--pc-button-color) !important;
+}
+
+.Polaris-Button--destructive {
+  --pc-button-color: var(--p-action-critical) !important;
+  --pc-button-text: var(--p-text-on-critical) !important;
+  --pc-button-color-hover: var(--p-action-critical-hovered) !important;
+  --pc-button-color-active: var(--p-action-critical-pressed) !important;
+  --pc-button-color-depressed: var(--p-action-critical-depressed) !important;
+  background: var(--p-action-critical) !important;
 }

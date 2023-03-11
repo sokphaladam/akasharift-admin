@@ -2,6 +2,7 @@ import {
   CustomersMinor,
   ProfileMinor,
   MetaobjectReferenceMinor,
+  ContentMinor,
 } from "@shopify/polaris-icons";
 
 export const MenuItems = [
@@ -25,4 +26,14 @@ export const MenuItems = [
       },
     ],
   },
+  // {
+  //   label: 'Settings',
+  //   sub: [
+  //     {
+  //       label: "Files",
+  //       icon: ContentMinor,
+  //       url: "/file",
+  //     }
+  //   ]
+  // }
 ];

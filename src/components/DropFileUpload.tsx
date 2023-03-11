@@ -1,15 +1,25 @@
 import React, { useState, useCallback } from "react";
 import { DropZone, LegacyStack, Thumbnail, Text } from "@shopify/polaris";
 
-export function DropFileUpload() {
+export function DropFileUpload({
+  onComplete,
+  allowMultiple,
+  url,
+}: {
+  onComplete: (val: any[]) => void;
+  allowMultiple?: boolean;
+  url?: string | null;
+}) {
   const [files, setFiles] = useState<any[]>([]);
 
   const handleDrop = useCallback(
     (_droppedFiles: any, acceptedFiles: any, rejectedFiles: any) => {
-      setFiles((files) => [...files, ...acceptedFiles]);
+      const x = [...files, ...acceptedFiles];
+      setFiles(x);
+      onComplete(x);
       // setRejectedFiles(rejectedFiles);
     },
-    []
+    [files, onComplete]
   );
 
   const fileUpload = !files.length && <DropZone.FileUpload />;
@@ -33,8 +43,34 @@ export function DropFileUpload() {
     </LegacyStack>
   );
 
+  if (url) {
+    return (
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <Thumbnail source={url} alt="" size="large" />
+        </div>
+        <div>
+          <DropZone
+            allowMultiple={allowMultiple}
+            accept="image/*"
+            type="image"
+            onDrop={handleDrop}
+          >
+            {uploadedFiles}
+            {fileUpload}
+          </DropZone>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <DropZone accept="image/*" type="image" onDrop={handleDrop}>
+    <DropZone
+      allowMultiple={allowMultiple}
+      accept="image/*"
+      type="image"
+      onDrop={handleDrop}
+    >
       {uploadedFiles}
       {fileUpload}
     </DropZone>

@@ -1,11 +1,6 @@
-import dynamic from "next/dynamic";
 import "./globals.css";
 import "@shopify/polaris/build/esm/styles.css";
-
-const PolarisProvider = dynamic(() => import("@/service/PolarisProvider"), {
-  ssr: false,
-  // loading: () => <p>Loading...</p>,
-});
+import { PolarisProvider } from "@/service/PolarisProvider";
 
 export const metadata = {
   title: "Create Next App",

@@ -2,9 +2,10 @@ import React, { useCallback, useContext, useState } from "react";
 import { TopBar } from "@shopify/polaris";
 import { UserContext } from "@/service/context/UserContext";
 import { useFirebase } from "@/service/useFirebase";
+import { useAuthContext } from "@/service/context/AuthContext";
 
 export function TopBarMarkup() {
-  const { user } = useContext(UserContext);
+  const { user }: any = useAuthContext();
   const { logout } = useFirebase();
   const [userMenuActive, setUserMenuActive] = useState(false);
   const toggleUserMenuActive = useCallback(
