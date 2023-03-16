@@ -29,6 +29,7 @@ export function FormTeamScreen({
   initalData?: any;
   onCompleted: any;
 }) {
+  const [loading, setLoading] = useState(false);
   const { data, file } = useFirebase();
   const [state, setState] = useState<State>({});
   const [error, setError] = useState({
@@ -88,16 +89,18 @@ export function FormTeamScreen({
   };
 
   const handleClickSave = () => {
+    setLoading(true);
     const check_validate = handleCheckValidate();
 
     if (check_validate) {
       if (typeof state.file === "string") {
-        if (initalData) {
+        if (initalData.id) {
           data.updateData("team", initalData.id, { ...state }).then((res) => {
             if (res.status) {
               alert(res.message);
               setState({});
               onCompleted();
+              setLoading(false);
             }
           });
         } else {
@@ -108,6 +111,7 @@ export function FormTeamScreen({
                 alert(res.message);
                 setState({});
                 onCompleted();
+                setLoading(false);
               }
             });
         }
@@ -124,7 +128,7 @@ export function FormTeamScreen({
         (error) => {},
         () => {
           getDownloadURL(task.snapshot.ref).then((url) => {
-            if (initalData) {
+            if (initalData.id) {
               data
                 .updateData("team", initalData.id, { ...state, file: url })
                 .then((res) => {
@@ -132,6 +136,7 @@ export function FormTeamScreen({
                     alert(res.message);
                     setState({});
                     onCompleted();
+                    setLoading(false);
                   }
                 });
             } else {
@@ -146,6 +151,7 @@ export function FormTeamScreen({
                     alert(res.message);
                     setState({});
                     onCompleted();
+                    setLoading(false);
                   }
                 });
             }
@@ -250,12 +256,24 @@ export function FormTeamScreen({
       </LegacyCard.Section>
       <LegacyCard.Section>
         <div className="flex">
-          <Button primary size="slim" onClick={handleClickSave}>
-            Save
+          <Button
+            loading={loading}
+            disabled={loading}
+            primary
+            size="slim"
+            onClick={handleClickSave}
+          >
+            {initalData.id ? "Save" : "Create"}
           </Button>
           <div className="ml-1">
             {initalData.id && (
-              <Button destructive size="slim" onClick={onCompleted}>
+              <Button
+                loading={loading}
+                disabled={loading}
+                destructive
+                size="slim"
+                onClick={onCompleted}
+              >
                 Cancel
               </Button>
             )}

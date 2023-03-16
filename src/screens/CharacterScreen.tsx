@@ -84,7 +84,7 @@ export function CharacterScreen() {
     <Page title="Characters" fullWidth>
       <div className="grid grid-cols-2 gap-2">
         <div>
-          <DropFileUpload onComplete={handleOnComplete} />
+          <DropFileUpload onComplete={handleOnComplete} allowMultiple={true} />
           <br />
           <LegacyCard>
             <LegacyCard.Section flush>

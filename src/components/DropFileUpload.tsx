@@ -15,7 +15,12 @@ export function DropFileUpload({
   const handleDrop = useCallback(
     (_droppedFiles: any, acceptedFiles: any, rejectedFiles: any) => {
       const x = [...files, ...acceptedFiles];
-      setFiles(x);
+      if (allowMultiple) {
+        setFiles(x);
+      } else {
+        console.log(acceptedFiles);
+        setFiles([acceptedFiles[0]]);
+      }
       onComplete(x);
       // setRejectedFiles(rejectedFiles);
     },

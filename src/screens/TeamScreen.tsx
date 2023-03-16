@@ -147,6 +147,7 @@ export function TeamScreen() {
             />
           ) : (
             <FormTeamScreen
+              initalData={selected}
               onCompleted={() => {
                 readCollections();
                 setSelected({});

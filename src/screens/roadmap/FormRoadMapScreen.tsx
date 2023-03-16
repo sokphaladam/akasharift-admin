@@ -27,6 +27,7 @@ export function FormRoadMapScreen({
   initalData?: any;
   onCompleted: any;
 }) {
+  const [loading, setLoading] = useState(false);
   const [textList, setTextList] = useState("");
   const [state, setState] = useState<State>({});
   const { file, data } = useFirebase();
@@ -89,6 +90,7 @@ export function FormRoadMapScreen({
         if (res.status) {
           alert(res.message);
           onCompleted();
+          setLoading(false);
         }
       });
   };
@@ -103,17 +105,19 @@ export function FormRoadMapScreen({
       if (res.status) {
         alert(res.message);
         onCompleted();
+        setLoading(false);
       }
     });
   };
 
   const handleSave = () => {
+    setLoading(true);
     const valid = CheckValidate(state, ["file", "title", "description"]);
 
     if (valid) return setError(valid);
 
     if (typeof state.file === "string") {
-      if (initalData) {
+      if (initalData.id) {
         updateRoad(initalData.id);
       } else {
         createRoad();
@@ -128,7 +132,7 @@ export function FormRoadMapScreen({
         (error) => {},
         () => {
           getDownloadURL(task.snapshot.ref).then((url) => {
-            if (initalData) {
+            if (initalData.id) {
               updateRoad(initalData.id, url);
             } else {
               createRoad(url);
@@ -220,9 +224,30 @@ export function FormRoadMapScreen({
           </IndexTable>
         </LegacyCard.Section>
         <LegacyCard.Section>
-          <Button primary submit>
-            Save
-          </Button>
+          <div className="flex">
+            <Button
+              size="slim"
+              loading={loading}
+              disabled={loading}
+              primary
+              submit
+            >
+              {initalData.id ? "Update" : "Create"}
+            </Button>
+            <div className="ml-1">
+              {initalData.id && (
+                <Button
+                  loading={loading}
+                  disabled={loading}
+                  destructive
+                  size="slim"
+                  onClick={onCompleted}
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </div>
         </LegacyCard.Section>
       </LegacyCard>
     </Form>
