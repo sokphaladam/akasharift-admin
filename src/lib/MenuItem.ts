@@ -2,7 +2,7 @@ import {
   CustomersMinor,
   ProfileMinor,
   MetaobjectReferenceMinor,
-  ContentMinor,
+  QuestionMarkMinor,
   AppsMinor,
 } from "@shopify/polaris-icons";
 
@@ -25,6 +25,11 @@ export const MenuItems = [
         icon: MetaobjectReferenceMinor,
         url: "/roadmap",
       },
+      {
+        label: 'FAQ',
+        icon: QuestionMarkMinor,
+        url: '/faq'
+      }
     ],
   },
   {

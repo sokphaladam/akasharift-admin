@@ -42,14 +42,7 @@ export function TeamScreen() {
   };
 
   return (
-    <Page
-      title="Team Member"
-      fullWidth
-      primaryAction={{
-        content: "Save",
-        onAction: () => {},
-      }}
-    >
+    <Page title="Team Member" fullWidth>
       <div className="grid grid-cols-2 gap-2">
         <div>
           <LegacyCard>
