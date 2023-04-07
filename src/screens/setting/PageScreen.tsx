@@ -4,6 +4,7 @@ import React, { useCallback, useState } from "react";
 import { FirstLayout } from "./components/FirstLayout";
 import { StoryLayout } from "./components/StroyLayout";
 import { EndLayout } from "./components/EndLayout";
+import { FooterLayout } from "./components/FooterLayout";
 
 const tabs = [
   {
@@ -22,6 +23,11 @@ const tabs = [
     content: "Last Layout",
     panelID: "last-layout-content",
   },
+  {
+    id: "footer-layout",
+    content: "Footer Page",
+    panelID: "footer-layout-content",
+  },
 ];
 
 export interface CustomPageProps {
@@ -34,6 +40,15 @@ export interface CustomPageProps {
     title?: string;
     url?: string;
   };
+  twitter?: {
+    title?: string;
+    url?: string;
+  };
+  discord?: {
+    title?: string;
+    url?: string;
+  };
+  copyright?: "";
 }
 
 export function PageScreen() {
@@ -53,6 +68,7 @@ export function PageScreen() {
               {tabs[selected].id === "first-layout" && <FirstLayout />}
               {tabs[selected].id === "story-layout" && <StoryLayout />}
               {tabs[selected].id === "last-layout" && <EndLayout />}
+              {tabs[selected].id === "footer-layout" && <FooterLayout />}
             </Tabs>
           </LegacyCard>
         </div>
