@@ -6,6 +6,7 @@ import {
   IndexTable,
   LegacyCard,
   Page,
+  Select,
   Thumbnail,
 } from "@shopify/polaris";
 import { DropFileUpload } from "@/components/DropFileUpload";
@@ -114,6 +115,9 @@ export function CharacterScreen() {
                     title: "Size",
                   },
                   {
+                    title: "Display Position",
+                  },
+                  {
                     title: "Action",
                     alignment: "end",
                   },
@@ -135,6 +139,42 @@ export function CharacterScreen() {
                         </IndexTable.Cell>
                         <IndexTable.Cell>
                           <small>{humanFileSize(item.size)}</small>
+                        </IndexTable.Cell>
+                        <IndexTable.Cell>
+                          <Select
+                            label=""
+                            labelHidden
+                            options={[
+                              {
+                                label: "Select Position",
+                                value: "default",
+                              },
+                              {
+                                label: "Left",
+                                value: "LEFT",
+                              },
+                              {
+                                label: "Right",
+                                value: "RIGHT",
+                              },
+                            ]}
+                            disabled={loading}
+                            onChange={(value) => {
+                              setLoading(true);
+                              data
+                                .updateData("character", item.id, {
+                                  ...item,
+                                  position: value,
+                                })
+                                .then((res) => {
+                                  if (res.status) {
+                                    readCollections();
+                                    setLoading(false);
+                                  }
+                                });
+                            }}
+                            value={item.position || "default"}
+                          />
                         </IndexTable.Cell>
                         <IndexTable.Cell>
                           <div className="flex justify-end items-center">
