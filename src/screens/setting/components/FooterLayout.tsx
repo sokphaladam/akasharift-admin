@@ -170,6 +170,41 @@ export function FooterLayout() {
             }}
           />
         </div>
+        <br />
+        <div className="grid grid-cols-2 gap-2">
+          <TextField
+            label="Link Title Telegram"
+            autoComplete="off"
+            value={state.telegram?.title}
+            onChange={(value) => {
+              setState((state) => {
+                return {
+                  ...state,
+                  discord: {
+                    ...state.telegram,
+                    title: value,
+                  },
+                };
+              });
+            }}
+          />
+          <TextField
+            label="Link URL Telegram"
+            autoComplete="off"
+            value={state.telegram?.url}
+            onChange={(value) => {
+              setState((state) => {
+                return {
+                  ...state,
+                  discord: {
+                    ...state.telegram,
+                    url: value,
+                  },
+                };
+              });
+            }}
+          />
+        </div>
       </LegacyCard.Section>
       <LegacyCard.Section>
         <Button

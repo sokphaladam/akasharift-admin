@@ -48,6 +48,10 @@ export interface CustomPageProps {
     title?: string;
     url?: string;
   };
+  telegram?: {
+    title?: string;
+    url?: string;
+  };
   copyright?: "";
 }
 
