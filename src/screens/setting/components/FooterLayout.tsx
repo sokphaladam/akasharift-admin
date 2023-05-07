@@ -180,7 +180,7 @@ export function FooterLayout() {
               setState((state) => {
                 return {
                   ...state,
-                  discord: {
+                  telegram: {
                     ...state.telegram,
                     title: value,
                   },
@@ -196,7 +196,7 @@ export function FooterLayout() {
               setState((state) => {
                 return {
                   ...state,
-                  discord: {
+                  telegram: {
                     ...state.telegram,
                     url: value,
                   },
