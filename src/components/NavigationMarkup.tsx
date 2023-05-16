@@ -10,7 +10,13 @@ export function NavigationMarkup() {
           <Navigation.Section
             key={item.label}
             title={item.label}
-            items={item.sub}
+            items={item.sub.map((x) => {
+              return {
+                label: x.label,
+                url: x.url,
+                icon: x.icon as any,
+              };
+            })}
           />
         );
       })}
